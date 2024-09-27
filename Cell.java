@@ -139,11 +139,9 @@ public class Cell {
          *
          * @return The number of live neighbors in the standard neighborhood.
          **/
-        private int countLiveNeighbors (Grid grid) {
-        
-        // get the neighboring 8 cell for the cell
-        int liveNeighbors = 0;
-        Cell[] neighbors = new Cell[8];
+        private int countLiveNeighbors (Grid grid) {   
+        int liveNeighbors = 0; //store the number of liveNeighbors
+        Cell[] neighbors = new Cell[8]; // holds this the neighboring Cells
         neighbors[0] = grid.getCell(_row-1,_column-1);
         neighbors[1] = grid.getCell(_row-1,_column);
         neighbors[2] = grid.getCell(_row-1,_column+1);
@@ -152,13 +150,15 @@ public class Cell {
         neighbors[5] = grid.getCell(_row+1,_column-1);
         neighbors[6] = grid.getCell(_row+1,_column);
         neighbors[7] = grid.getCell(_row+1,_column+1);
+        //count the number of liveNeighbors and update var liveNeighbors
         for (int neighborhood = 0; neighborhood < neighbors.length ; neighborhood++) {
-            if(neighbors[neighborhood] != null && neighbors[neighborhood]._isAlive){
+            boolean isValidNeighbor = neighbors[neighborhood] != null;
+            if(isValidNeighbor && neighbors[neighborhood]._isAlive){
                 liveNeighbors++;
             }
         }
         return liveNeighbors;
-    }
+        }
         // =========================================================================
     
     
@@ -171,16 +171,14 @@ public class Cell {
          * neighbors becomes alive, and all other cells will die</i>.
          **/
         public void evolve (Grid grid) {
-    
-        // WRITE ME.
-        int liveNeighbors = countLiveNeighbors(grid);
-        if(
-            (isAlive() && (liveNeighbors == 2 || liveNeighbors == 3)) || (!isAlive() && liveNeighbors == 3)
-        ){
-                _willBeAlive = true;
-        }else{
-            _willBeAlive = false;
-        }
+            int liveNeighbors = countLiveNeighbors(grid); // stores this cell's number of this cell's live neighbors
+            boolean has_2_or_3_liveNeighbors = isAlive() && (liveNeighbors == 2 || liveNeighbors == 3);
+            boolean has_3_liveNeighbors = !isAlive() && liveNeighbors == 3;
+            if(has_2_or_3_liveNeighbors || has_3_liveNeighbors){
+                    _willBeAlive = true;
+            }else{
+                _willBeAlive = false;
+            }
         } // evolve ()
         // =========================================================================
     
@@ -192,12 +190,11 @@ public class Cell {
          * liveness whatever was calculated by <code>evolve()</code>.
          **/
         public void advance () {
-        // WRITE ME.
-        if (_willBeAlive) {
-            makeAlive();
-        }else{
-            makeDead();
-        };
+            if (_willBeAlive) {
+                makeAlive();
+            }else{
+                makeDead();
+            };
         }
         // =========================================================================
     

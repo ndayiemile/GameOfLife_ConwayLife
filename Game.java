@@ -174,9 +174,8 @@ public class Game {
      **/
     public void evolve () {
 
-	// WRITE ME.
-    // compute each cell's state in the next generation
-    for (int row = 0; row < getRows(); row++) {
+	 // compute each cell's state in the next generation
+     for (int row = 0; row < getRows(); row++) {
         for (int col = 0; col < getColumns(); col++) {
             getCell(row, col).evolve(_grid);
         }
@@ -188,7 +187,8 @@ public class Game {
         }
     }
     //update the generation
-    _generation +=1;
+    _generation++;
+
     } // evolve ()
     // =========================================================================
 
@@ -216,17 +216,18 @@ public class Game {
      * @return The number of live cells in the current universe.
      **/ 
     public int getPopulation () {
-
+        //initialize the number of live cells to zero
     int liveCells = 0;
-    // visit each cell in on the grid to check it whether its alive
-    for (int row = 0; row < getRows(); row++) {
+	 // visit each cell in on the grid to check it whether its alive
+     for (int row = 0; row < getRows(); row++) {
         for (int col = 0; col < getColumns(); col++) {
             if(getCell(row, col)._isAlive){
-                liveCells++;
+                liveCells++; // count this live cell
             }
         }
     }
     return liveCells;
+
     } // getPopulation()
     // =========================================================================
 
@@ -281,6 +282,3 @@ public class Game {
 // =============================================================================
 } // class Game
 // =============================================================================
-
-
-
